@@ -1,7 +1,53 @@
-- hosts: lab
+- hosts: RPI
   become: yes
   roles:
     - common
+    - gantsign.oh-my-zsh
+  vars:
+    users:
+     - username: pi
+       oh_my_zsh:
+       theme: robbyrussell
+       plugins:
+         - git
+         - syntax-highlighting
+         - autosuggestions
+         - debian
+         - common-aliases
+         - history
+         - history-substring-search
+         - autojump
   tags:
-    lab
+    RPI
+- hosts: EVCC
+  become: true
+  pre_tasks:
+    - name: update apt cache
+      apt:
+        cache_valid_time: 600
+  roles:
+    - hannseman.raspbian
+    - static-ip
+  vars:
+    system_hostname: "evcc"
+    system_ssh_user_password: gzockoll
+    system_ssh_user_salt: "CZCq8RJeaMP4A92o"
+    # The system locale
+    system_locale: "de_DE.UTF-8"
+    # The system timezone
+    system_timezone: "Europe/Berlin"
+    # List dictionaries of desired tmpfs mounts.
+    system_tmpfs_mounts:
+    - { src: "/run", size: "10%", options: "nodev,noexec,nosuid" }
+    - { src: "/tmp", size: "10%", options: "nodev,nosuid" }
+    - { src: "/var/log", size: "10%", options: "nodev,noexec,nosuid" }
+    system_packages:
+      - apt-transport-https
+      - vim
+    ssh_public_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD1CrmEy7eHAHOa0BPINshtdu2rMv2JhNAV30rR8aZPnRuO2g+SPvGonZE9F/CPBbwxryQ0OBieSZl+x86n8iMQpizf1+O90eDjc2gI4Ljw6l96fr2+yckRtfFY6MJ+0PvvnQHZ3wOMH3dufhsys8xbtUsy6iL4OKjmEMNlsfiXZr8e6if5QDPOCaLflsYaylIZ1s8j7w5xuSKLIlrVE6vuwhsi3iukRhTDG/w88/A2Fp573EfMpWFyPETwMdmRA2rv0OmAodH5ICPzVFayKHd19f9IuD+RnZ6JhYxAxO00QoMW6xeFHImIzmWs0PJPWfFVYCdXSJxM+HKsl7E7pzsN gzo@MacBook-Pro.local
+    interface: "eth0"
+    ipaddress: "192.168.0.1/24"
+    routers: "192.168.187.1"
+    dns_servers: "192.168.187.1"
 

@@ -1,3 +1,7 @@
+[RPI]
+192.168.187.69 ansible_user=pi
+192.168.187.71 ansible_user=pi
+192.168.187.73 ansible_user=pi
 
-[lab]
-localhost ansible_host=10.1.1.28 ansible_user=pi
+[EVCC]
+192.168.187.73 ansible_user=pi
