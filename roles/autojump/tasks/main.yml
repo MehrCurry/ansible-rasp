@@ -1,0 +1,28 @@
+---
+# tasks file for autojump
+- name: "Install autojump package"
+  apt:
+    name: ['autojump']
+    state: latest
+
+- name: Ansible check .zshrc exists.
+  stat:
+    path: /home/pi/.zshrc
+  register: zshrc
+
+- name: Ansible check .bashrc exists.
+  stat:
+    path: /home/pi/.bashrc
+  register: bashrc
+
+- name: add to .zshrc
+  lineinfile:
+    path: /home/pi/.zshrc
+    line: '. /usr/share/autojump/autojump.sh'
+  when: zshrc.stat.exists
+
+- name: add to .bashrc
+  lineinfile:
+    path: /home/pi/.bashrc
+    line: '. /usr/share/autojump/autojump.sh'
+  when: bashrc.stat.exists

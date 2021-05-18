@@ -1,0 +1,19 @@
+---
+- name: Download evcc
+  ansible.builtin.unarchive:
+    src: https://github.com/andig/evcc/releases/download/0.55/evcc_0.55_linux_armv6.tar.gz
+    dest: /usr/local/bin
+    mode: 0755
+    exclude:
+      - evcc.dist.yaml
+    remote_src: yes
+  when: ansible_architecture == "armv7l"
+
+- name: install evcc systemd unit file
+  copy:
+    src: evcc.service
+    dest: /etc/systemd/system/evcc.service
+    mode: 0644
+
+- name: start evcc
+  systemd: state=started name=evcc daemon_reload=yes

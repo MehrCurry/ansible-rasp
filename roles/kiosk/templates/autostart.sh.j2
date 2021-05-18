@@ -1,0 +1,13 @@
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xset s on
+#@xset s noblank
+@xset dpms 900 0 0
+
+# Beenden des X-Servers via Strg+Alt+Backspace
+@setxkbmap -option terminate:ctrl_alt_bksp
+
+# Chromium zurücksetzen und im Kiosk-Modus mit gewünschter URL starten
+@sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
+@sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+@chromium-browser --disable-infobars --incognito --kiosk --disable-component-update --check-for-update-interval=31536000 --force-device-scale-factor=0.65 --enable-features=OverlayScrollbar,OverlayScrollbarFlashAfterAnyScrollUpdate,OverlayScrollbarFlashWhenMouseEnter {{ chrome_url }} &

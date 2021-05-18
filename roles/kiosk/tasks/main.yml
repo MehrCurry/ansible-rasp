@@ -1,0 +1,43 @@
+---
+- name: Install packages
+  apt:
+    state: present
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - unclutter
+    - xserver-xorg
+    - x11-xserver-utils
+    - xinit
+    - openbox
+    - xdotool
+    - chromium-browser
+
+- name: Ensure we're using the correct ntp server
+  lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    regexp: "NTP="
+    line: "NTP={{ ntpserver }}"
+    state: present
+  notify: Activate ntp
+
+- name: Ensure X starts on login
+  lineinfile:
+    path: /home/{{ autostart_user }}/.zshrc
+    line: "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor"
+    state: present
+    create: yes
+
+- name: Create openbox autostart configuration
+  template:
+    src: templates/autostart.sh.j2
+    dest:  /home/{{ autostart_user }}/.config/lxsession/LXDE/autostart
+    owner: "{{ autostart_user }}"
+    group: "{{ autostart_user }}"
+    mode: 0644
+
+- name: Add calibration file
+  copy:
+    src: 99-calibration.conf
+    dest: /etc/X11/xorg.conf.d/99-calibration.conf
+    mode: 0644

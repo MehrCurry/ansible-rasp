@@ -1,0 +1,4 @@
+- name: rpi-lcd
+  src: https://github.com/fedejaure/ansible-role-rpi-lcd.git
+- name: hannseman.raspbian
+- name: gantsign.oh-my-zsh

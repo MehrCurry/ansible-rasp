@@ -1,0 +1,20 @@
+---
+- name: Activate ntp
+  shell: timedatectl set-ntp true---
+- name: Restart getty
+  systemd:
+    name: getty@tty1.service
+    state: restarted
+    daemon_reload: yes---
+- name: Restart session
+  command: killall -u {{ autostart_user }}
+  notify: Restart getty
+# sudo systemctl restart xrdp
+- name: Restart xrdp
+  service:
+    name: xrdp
+    state: restarted
+- name: Delete Chrome Singleton
+  file:
+    path="/home/{{ autostart_user }}/.config/chromium/Singleton*"
+    state=absent

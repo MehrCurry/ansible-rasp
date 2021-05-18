@@ -1,0 +1,15 @@
+[Unit]
+Description=evcc
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/local/bin/evcc --log debug
+WorkingDirectory=/home/pi/wrk/evcc
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+

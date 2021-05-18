@@ -1,7 +1,14 @@
 [RPI]
+192.168.187.68 ansible_user=pi system_hostname=octopi
+192.168.187.69 ansible_user=pi system_hostname=raspi4
+192.168.187.71 ansible_user=pi system_hostname=raspi3
+192.168.187.73 ansible_user=pi system_hostname=evcc
+192.168.187.28 ansible_user=pi system_hostname=displaypi
+
+[DOCKER]
+192.168.187.73 ansible_user=pi
 192.168.187.69 ansible_user=pi
 192.168.187.71 ansible_user=pi
-192.168.187.73 ansible_user=pi
 
 [EVCC]
 192.168.187.73 ansible_user=pi

@@ -1,0 +1,5 @@
+---
+- name: "Install desktop package"
+  apt:
+    name: ['raspberrypi-ui-mods']
+    state: latest
