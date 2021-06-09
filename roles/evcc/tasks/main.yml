@@ -1,7 +1,7 @@
 ---
 - name: Download evcc
   ansible.builtin.unarchive:
-    src: https://github.com/andig/evcc/releases/download/0.55/evcc_0.55_linux_armv6.tar.gz
+    src: https://github.com/andig/evcc/releases/download/0.56/evcc_0.56_linux_armv6.tar.gz
     dest: /usr/local/bin
     mode: 0755
     exclude:

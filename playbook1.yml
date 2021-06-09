@@ -5,6 +5,7 @@
     - common
     - gantsign.oh-my-zsh
     - hannseman.raspbian
+    - arillso.ntp
     - role: autojump
       tags:
         - autojump
